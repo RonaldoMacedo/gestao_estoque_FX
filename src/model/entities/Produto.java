@@ -26,25 +26,33 @@ public class Produto implements Serializable {
 	public Integer getId_produto() {
 		return id_produto;
 	}
+	
+	public void setId_produto(Integer id_produto) {
+		this.id_produto = id_produto;
+	}
 
 	public String getDescricao_interna() {
 		return descricao_interna;
+	}
+	
+	public void setDescricao_interna(String descricao_interna) {
+		this.descricao_interna = descricao_interna;
 	}
 
 	public String getSituacao() {
 		return situacao;
 	}
+	
+	public void setSituacao(String situacao) {
+		this.situacao = situacao;
+	}
 
 	public Integer getSaldo() {
 		return saldo;
 	}
-
-	public void setDescricao_interna(String descricao_interna) {
-		this.descricao_interna = descricao_interna;
-	}
-
-	public void setSituacao(String situacao) {
-		this.situacao = situacao;
+	
+	public void setSaldo(Integer saldo) {
+		this.saldo = saldo;
 	}
 
 	@Override
