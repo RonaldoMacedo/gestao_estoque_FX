@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ListaProdutoController">
    <children>
       <Label text="Produtos cadastrados">
          <font>
@@ -24,15 +24,15 @@
       </Label>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-          <Button mnemonicParsing="false" text="Novo" />
+          <Button fx:id="btNovo" mnemonicParsing="false" onAction="#onBtNovoAction" text="Novo" />
         </items>
       </ToolBar>
-      <TableView prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="tabelaProduto" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Codigo" />
-          <TableColumn prefWidth="75.0" text="Descricao interna" />
-            <TableColumn prefWidth="75.0" text="Situacao" />
-            <TableColumn prefWidth="75.0" text="Saldo" />
+          <TableColumn fx:id="colunaIdProduto" prefWidth="75.0" text="Codigo" />
+          <TableColumn fx:id="colunaDescricaoInterna" prefWidth="75.0" text="Descricao interna" />
+            <TableColumn fx:id="colunaSituacao" prefWidth="75.0" text="Situacao" />
+            <TableColumn fx:id="colunaSaldo" prefWidth="75.0" text="Saldo" />
         </columns>
       </TableView>
    </children>
