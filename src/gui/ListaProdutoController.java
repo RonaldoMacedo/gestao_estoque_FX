@@ -94,6 +94,7 @@ public class ListaProdutoController implements Initializable {
 			
 			ProdutoFormController controller = loader.getController();
 			controller.setProduto(obj);
+			controller.setProdutoService(new ListaProdutoService());
 			controller.updateFormData();
 			
 			Stage dialogStage = new Stage();

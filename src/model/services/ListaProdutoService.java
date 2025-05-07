@@ -13,5 +13,14 @@ public class ListaProdutoService {
 	public List<Produto> findAll(){
 		return dao.findAll();
 	}
+	
+	public void saveOrUpdate(Produto obj) {
+		if(obj.getId_produto() == null) {
+			dao.insert(obj);
+		}
+		else {
+			dao.update(obj);
+		}
+	}
 
 }
