@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import db.DB;
 import db.DbException;
@@ -39,34 +42,39 @@ public class ProdutoDaoJDBC implements ProdutoDao {
 
 	@Override
 	public Produto findById(Integer id) {
+		return null;
+
+	}
+
+	@Override
+	public List<Produto> findAll() {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement("select * from produto where id_produto = ?");
-			st.setInt(1, id);
+			st = conn.prepareStatement("select * from produto");
 			rs = st.executeQuery();
-			if(rs.next()) {
+			
+			List<Produto> list = new ArrayList<>();
+			
+			while(rs.next()) {
 				Produto prod = new Produto();
 				prod.setId_produto(rs.getInt("id_produto"));
 				prod.setDescricao_interna(rs.getString("descricao_interna"));
 				prod.setSituacao(rs.getString("situacao"));
 				prod.setSaldo(rs.getInt("saldo"));
-				return prod;
+				list.add(prod);
 			}
-			return null;
-		}catch(SQLException e) {
+			
+			return list;
+		}
+		catch(SQLException e) {
 			throw new DbException(e.getMessage());
-		}finally {
+		}
+		finally {
 			DB.closeStatement(st);
 			DB.closeResultSet(rs);
-			
 		}
-	}
 
-	@Override
-	public List<Produto> findAll() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
