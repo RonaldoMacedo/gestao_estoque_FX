@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import application.Main;
+import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
 import javafx.collections.FXCollections;
@@ -26,7 +27,7 @@ import javafx.stage.Stage;
 import model.entities.Produto;
 import model.services.ListaProdutoService;
 
-public class ListaProdutoController implements Initializable {
+public class ListaProdutoController implements Initializable, DataChangeListener {
 	
 	private ListaProdutoService service;
 	
@@ -95,6 +96,7 @@ public class ListaProdutoController implements Initializable {
 			ProdutoFormController controller = loader.getController();
 			controller.setProduto(obj);
 			controller.setProdutoService(new ListaProdutoService());
+			controller.subscribeDataChangeListener(this);
 			controller.updateFormData();
 			
 			Stage dialogStage = new Stage();
@@ -108,6 +110,12 @@ public class ListaProdutoController implements Initializable {
 		}catch(IOException e) {
 			Alerts.showAlert("IOException", "Erro ao carregar a tela", e.getMessage(), AlertType.ERROR);
 		}
+	}
+
+	@Override
+	public void onDataChanged() {
+		updateTableView();
+		
 	}
 
 }
