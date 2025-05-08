@@ -22,5 +22,9 @@ public class ListaProdutoService {
 			dao.update(obj);
 		}
 	}
+	
+	public void remove(Produto obj) {
+		dao.deleteById(obj.getId_produto());
+	}
 
 }
