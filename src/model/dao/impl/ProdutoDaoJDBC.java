@@ -67,6 +67,7 @@ public class ProdutoDaoJDBC implements ProdutoDao {
 			
 			st.setString(1, obj.getDescricao_interna());
 			st.setString(2, obj.getSituacao());
+			st.setInt(3, obj.getId_produto());
 			
 			st.executeUpdate();
 		}

@@ -33,6 +33,7 @@
           <TableColumn fx:id="colunaDescricaoInterna" prefWidth="75.0" text="Descricao interna" />
             <TableColumn fx:id="colunaSituacao" prefWidth="75.0" text="Situacao" />
             <TableColumn fx:id="colunaSaldo" prefWidth="75.0" text="Saldo" />
+            <TableColumn fx:id="tableColumnEDITAR" prefWidth="75.0" />
         </columns>
       </TableView>
    </children>

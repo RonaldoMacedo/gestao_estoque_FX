@@ -9,6 +9,7 @@ import application.Main;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -45,6 +47,9 @@ public class ListaProdutoController implements Initializable, DataChangeListener
 	
 	@FXML
 	private TableColumn<Produto, Integer> colunaSaldo;
+	
+	@FXML
+	private TableColumn<Produto, Produto> tableColumnEDITAR;
 	
 	@FXML
 	private Button btNovo;
@@ -86,6 +91,7 @@ public class ListaProdutoController implements Initializable, DataChangeListener
 		List<Produto> list = service.findAll();
 		obsList = FXCollections.observableArrayList(list);
 		tabelaProduto.setItems(obsList);
+		initEditButtons();
 	}
 	
 	private void createDialogForm(Produto obj, String absoluteName, Stage parentStage) {
@@ -116,6 +122,25 @@ public class ListaProdutoController implements Initializable, DataChangeListener
 	public void onDataChanged() {
 		updateTableView();
 		
+	}
+	
+	private void initEditButtons() {
+		tableColumnEDITAR.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+		tableColumnEDITAR.setCellFactory(param -> new TableCell<Produto, Produto>(){
+			private final Button button = new Button("Editar");
+			
+			@Override
+			protected void updateItem(Produto obj, boolean empty) {
+				super.updateItem(obj, empty);
+				
+				if(obj == null) {
+					setGraphic(null);
+					return;
+				}
+				setGraphic(button);
+				button.setOnAction(event -> createDialogForm(obj, "/gui/ProdutoForm.fxml", Utils.stageAtual(event)));
+			}
+		});
 	}
 
 }
