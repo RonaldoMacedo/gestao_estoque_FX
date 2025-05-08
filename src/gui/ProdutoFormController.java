@@ -3,7 +3,9 @@ package gui;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import db.DbException;
 import gui.listeners.DataChangeListener;
@@ -18,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.Produto;
+import model.exceptions.ValidationException;
 import model.services.ListaProdutoService;
 
 public class ProdutoFormController implements Initializable {
@@ -77,6 +80,9 @@ public class ProdutoFormController implements Initializable {
 			notifyDataChangeListeners();
 			Utils.stageAtual(event).close();
 		}
+		catch(ValidationException e) {
+			setErrorMessages(e.getErrors());
+		}
 		catch(DbException e) {
 			Alerts.showAlert("Erro ao incluir produto", null, e.getMessage(), AlertType.ERROR);
 		}
@@ -92,10 +98,20 @@ public class ProdutoFormController implements Initializable {
 	private Produto getFormData() {
 		Produto obj = new Produto();
 		
+		ValidationException exception = new ValidationException("Erro de validação");
+		
 		obj.setId_produto(Utils.tryParseToInt(txtCodigo.getText()));
+		
+		if(txtDescricao.getText() == null || txtDescricao.getText().trim().equals("")) {
+			exception.addError("descricao", "Nome do produto obrigatório");
+		}
 		obj.setDescricao_interna(txtDescricao.getText());
 		obj.setSituacao(txtSituacao.getText());
 		obj.setSaldo(Utils.tryParseToInt(txtSaldo.getText()));
+		
+		if(exception.getErrors().size() > 0) {
+			throw exception;
+		}
 		
 		return obj;
 	}
@@ -124,6 +140,14 @@ public class ProdutoFormController implements Initializable {
 		txtDescricao.setText(entidade.getDescricao_interna());
 		txtSituacao.setText(entidade.getSituacao());
 		txtSaldo.setText(String.valueOf(entidade.getSaldo()));
+	}
+	
+	private void setErrorMessages(Map<String, String> errors) {
+		Set<String> fields = errors.keySet();
+		
+		if(fields.contains("descricao")) {
+			labelErroDescricao.setText(errors.get("descricao"));
+		}
 	}
 
 }
